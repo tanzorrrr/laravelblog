@@ -12,6 +12,8 @@
 */
 
 Route::group(['middleware'=>['web']],function () {
+    Route::get('blog/{slug}',['as'=>'blog.single','uses'=>'BlogController@getSingle'])
+    ->where('slug','[\w\d\-\_]+');
     Route::get('category', 'PageController@getCategory');
 
     Route::get('contact', 'PageController@getContact');

@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts= Post::all();
+        $posts= Post::orderBy('id','desc')->paginate(10);
 
         return view('posts.index')->withPosts($posts);
     }
@@ -40,11 +40,13 @@ class PostController extends Controller
     {
        $this->validate($request, array(
          'title'=>'required|max:255',
+           'slug'=>'required|alpha_dash|min:5|max:255',
            'body'=>'required'
        ));
 
         $post = new Post;
         $post->title=$request->title;
+        $post->slug= $request->slug;
         $post->body = $request->body;
 
         $post->save();
@@ -112,6 +114,10 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post=Post::find($id);
+
+        $post->delete();
+            Session::flash('success','The post was successfully delited.');
+        return redirect()->route('posts.index');
     }
 }

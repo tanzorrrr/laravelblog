@@ -4,9 +4,13 @@
     @section('styleshet')
         <link rel="stylesheet" href="styles.css">
     @endsection
-
-    <h3>Basic Navbar Example</h3>
-    <p>A navigation bar is a navigation header that is placed at the top of the page.</p>
+    @foreach($posts as $post)
+    <div class="post">
+        <h3>{{$post->title}}</h3>
+        <p>{{substr($post->body,0,300)}}</p>
+        <a href="{{url('blog/'.$post->slug)}}">read more</a>
+     </div>
+    @endforeach
 </div>
     @section('scripts')
         <script url="js/scripts.js"></script>
