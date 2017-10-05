@@ -11,9 +11,20 @@
 |
 */
 
-Route::group(['middleware'=>['web']],function () {
+Route::group(['middleware'=>['web']],function (){
+    //Authentification Routes
+    Route::get('auth/login','Auth\LoginController@getLogin');
+    Route::post('auth/login','Auth\LoginController@postLogin');
+    Route::get('auth/logout','Auth\LoginController@getLogout');
+
+    //Regsration Routes
+    Route::get('auth/register','Auth\RegisterController@getRegiser');
+    Route::post('auth/register','Auth\RegisterController@postRegiser');
+
     Route::get('blog/{slug}',['as'=>'blog.single','uses'=>'BlogController@getSingle'])
     ->where('slug','[\w\d\-\_]+');
+
+    Route::get('blog',['uses'=>'BlogController@getIndex','as'=>'blog.index']);
     Route::get('category', 'PageController@getCategory');
 
     Route::get('contact', 'PageController@getContact');
@@ -25,3 +36,7 @@ Route::group(['middleware'=>['web']],function () {
     Route::resource('posts', 'PostController');
 });
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
