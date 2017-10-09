@@ -12,6 +12,9 @@
 */
 
 Route::group(['middleware'=>['web']],function (){
+    Route::group(['prefix'=>'admin','namespace'=>'Admin','midlewqre'=>['auth']],function(){
+        Route::get('/','DashboardController@dashboard')->name('admin.index');
+    });
     //Authentification Routes
     Route::get('auth/login','Auth\LoginController@getLogin');
     Route::post('auth/login','Auth\LoginController@postLogin');
@@ -34,6 +37,7 @@ Route::group(['middleware'=>['web']],function (){
     Route::get('/', 'PageController@getIndex');
 
     Route::resource('posts', 'PostController');
+    Route::resource('admin/categories','AdminCategoriesController');
 });
 
 
