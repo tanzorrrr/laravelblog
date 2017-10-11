@@ -14,6 +14,7 @@
 Route::group(['middleware'=>['web']],function (){
     Route::group(['prefix'=>'admin','namespace'=>'Admin','midlewqre'=>['auth']],function(){
         Route::get('/','DashboardController@dashboard')->name('admin.index');
+        Route::resource('/category','CategoryController',['as'=>'admin']);
     });
     //Authentification Routes
     Route::get('auth/login','Auth\LoginController@getLogin');
